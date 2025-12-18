@@ -1,4 +1,4 @@
-# Tabuleiro de xadrez 8x8 -> vou ter q intercalar entre brancas e pretas: 0 1 0 1 0 1 0 1 dps inverte, 8 colunas
+# tabuleiro de xadrez 8x8 -> vou ter q intercalar entre brancas e pretas: 0 1 0 1 0 1 0 1 dps inverte, 8 colunas
 import numpy as np
 def criar_grid_tabuleiro():
     tabuleiro = np.zeros((8,8), dtype="int")
