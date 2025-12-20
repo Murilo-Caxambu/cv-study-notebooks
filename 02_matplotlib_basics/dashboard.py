@@ -32,14 +32,14 @@ alunos = random.randint(20,80, size=(3))
 
 fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(12,8) )
 #grafico 1: nota por mes
-ax[0,0].plot(mes, notas,'o--r', mfc = 'r')
+ax[0,0].plot(mes, notas,'o-', color='paleturquoise', mfc = 'paleturquoise')
 ax[0,0].grid(True)
 ax[0,0].set_xlabel("Mês")
 ax[0,0].set_ylabel("Notas")
 ax[0,0].set_title("Evolução das notas médias")
 
 #grafico2:scatter de notas:
-scatter = ax[0,1].scatter(matematica,fisica, c=fisica, cmap="plasma", alpha =0.8)
+scatter = ax[0,1].scatter(matematica,fisica, c=fisica, cmap='winter', alpha =0.8)
 ax[0,1].set_xlabel("Matemática")
 ax[0,1].set_ylabel("Física")
 ax[0,1].set_title("Matemática vs Física")
