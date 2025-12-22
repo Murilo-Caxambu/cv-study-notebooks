@@ -1,0 +1,8 @@
+ID,Modelo,Potencia_MW,Eficiencia_%,Status,Localizacao
+T01,Siemens_X,450,92.5,Ativa,Setor_A
+T02,GE_Y,500,94.0,Ativa,Setor_A
+T03,Siemens_X,440,91.8,Manutencao,Setor_B
+T04,Vestas_V,300,88.5,Inativa,Setor_C
+T05,GE_Y,510,95.2,Ativa,Setor_B
+T06,Siemens_X,445,92.0,Ativa,Setor_A
+T07,Vestas_V,290,87.0,Falha,Setor_C
