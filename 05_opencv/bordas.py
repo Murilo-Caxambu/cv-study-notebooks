@@ -11,13 +11,11 @@ def resize(frame, scale = 0.5):
     return cv.resize(frame,dimensions, interpolation=cv.INTER_AREA)
 
 img = resize(placa)
-img_blur = cv.GaussianBlur(img, (15,15),3)
-img_canny = cv.Canny(img_blur, 50, 150)
 
-kernel = np.ones((2,2), np.uint8)
-img_dilatada = cv.dilate(img_canny, kernel, iterations=1)
-
-contornos, _ = cv.findContours(img_dilatada, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+img_blur = cv.GaussianBlur(img_gray, (9, 9), 0)
+_, img_thresh = cv.threshold(img_blur, 130, 255, cv.THRESH_BINARY)
+contornos, _ = cv.findContours(img_thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 contornos = sorted(contornos, key=cv.contourArea, reverse=True)[:5]
 
 img_debug = img.copy()
@@ -25,16 +23,20 @@ img_debug = img.copy()
 for cnt in contornos:
     area = cv.contourArea(cnt)
     perimetro = cv.arcLength(cnt, True)
-    approx = cv.approxPolyDP(cnt, 0.02 * perimetro, True)
-
+    approx = cv.approxPolyDP(cnt, 0.03 * perimetro, True)
     pontos = len(approx)
 
-    if area > 2000:
-        cv.drawContours(img_debug, [approx], -1, (0,0,255), 2)
-        x, y = approx[0][0]
-        cv.putText(img_debug, f"pontos: {pontos}", (x, y -10),
-                   cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        print(f"Area: {area} | Pontos detectados: {pontos}")
+    if area > 30000 and pontos == 4:
+        x, y, w, h = cv.boundingRect(approx)
+        
+        cv.rectangle(img_debug, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-cv.imshow("Debug de Geometria", img_debug)
+        placa_recortada = img[y:y+h, x:x+w]
+        
+        cv.imshow("Recorte Simples", placa_recortada)
+        cv.imwrite("placa_recortada_simples.jpg", placa_recortada)
+        
+        print(f"Placa recortada salva! Dimensões: {w}x{h}")
+        break
+cv.imshow("Debug Final", img_debug)
 cv.waitKey(0)
